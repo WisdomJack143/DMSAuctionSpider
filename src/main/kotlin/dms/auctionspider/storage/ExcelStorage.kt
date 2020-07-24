@@ -15,12 +15,16 @@ class ExcelStorage {
         var file= File("./"+ DateFormat.getDateInstance(DateFormat.DEFAULT).format(Date())+".xls");
 
         fun saveFinalBean(beans:ArrayList<FinalBean>){
-            this.initFile()
-            var i=0;
+
+            var i=1;
            var book: WritableWorkbook = Workbook.createWorkbook(file )
             var sheet=book.createSheet("数据",0)
           //  var keys={"地址";"户型";"面积";"装修";"参考价";"起拍价";"保证金";"加幅";"开拍时间";"持续时间";"产权"}
-
+            var keys= arrayOf( "地址","户型","面积","装修","参考价","起拍价","保证金","加幅","开拍时间","持续时间","产权")
+            for( i in  keys.indices){
+                var label=Label(i,0,keys[i] );
+                sheet.addCell(label);
+            }
             for (bean in beans){
                 println("Writing bean "+i+"with "+beans.size+"in total")
                 sheet.addCell(Label(0,i,bean.dizhi));
@@ -40,19 +44,7 @@ class ExcelStorage {
             book.close()
 
         }
-        private fun initFile(){
-        if(file.exists())
-            file.delete()
-            file.createNewFile();
-            var book: WritableWorkbook = Workbook.createWorkbook(file)
-            var sheet=book.createSheet("数据",0)
-            var keys= arrayOf( "地址","户型","面积","装修","参考价","起拍价","保证金","加幅","开拍时间","持续时间","产权")
-            for( i in  keys.indices){
-                var label=Label(i,0,keys[i] );
-                sheet.addCell(label);
-            }
 
-        }
 
     }
 

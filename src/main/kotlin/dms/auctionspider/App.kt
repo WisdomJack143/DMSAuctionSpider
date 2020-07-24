@@ -9,7 +9,11 @@ import dms.auctionspider.storage.ExcelStorage
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
+import java.io.File
+import java.text.DateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 
 class App {
@@ -22,6 +26,8 @@ class App {
 
         initProperities()
         println("Loaded Propertities")
+        initFile()
+        println("Loaded Files")
         runSpiders()
         println("Program finished ")
     }
@@ -40,6 +46,14 @@ class App {
         println("Starting launching spiders")
         TaobaoAddressSpider(driver).start()
         println("TaobaoSpider Started")
+    }
+    private fun initFile(){
+        var file= File("./"+ DateFormat.getDateInstance(DateFormat.DEFAULT).format(Date())+".xls");
+
+        if(file.exists())
+            file.delete()
+        file.createNewFile();
+
     }
 }
 
