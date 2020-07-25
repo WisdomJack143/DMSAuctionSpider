@@ -1,18 +1,16 @@
-package dms.auctionspider.spider.taobao
+package dms.auctionspider.bak.spider.taobao
 
 import com.google.gson.Gson
 import dms.auctionhouse.bean.AddressBean
 import dms.auctionhouse.spider.AbstractSpider
-import dms.auctionspider.App
-import dms.auctionspider.bean.FinalBean
-import dms.auctionspider.storage.ExcelStorage
+import dms.auctionspider.bak.App
+import dms.auctionspider.bak.bean.FinalBean
 import org.openqa.selenium.TimeoutException
 import org.openqa.selenium.chrome.ChromeDriver
-import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 
 class TaobaoHouseSpider : AbstractSpider {
-
+    var trys=0;
     lateinit var driver: ChromeDriver;
     lateinit var bean_address: AddressBean;
 
@@ -22,18 +20,27 @@ class TaobaoHouseSpider : AbstractSpider {
     }
 
     override fun start() {
-        connect()
-        var bean=getBean();
-        App.beanarray.add(bean)
-        println("New json"+Gson().toJson(bean));
-    }
+
+        try {
+            connect()
+            var bean = getBean();
+            App.beanarray.add(bean)
+            println("New json" + Gson().toJson(bean));
+        }catch(e:Exception){
+            println("fail for bean "+bean_address.address)
+
+        }
+        }
 
     private fun connect() {
+        this.trys=trys+1;
         try{
          driver.get(bean_address.html);
+
         }catch (e: TimeoutException){
             print("加载页面太慢，停止加载，继续下一步操作")
-            driver.executeScript("window.stop()")
+
+                driver.executeScript("window.stop()")
         }
             println("Current spidering " + bean_address.address+"\n" +
                     "With HTML"+bean_address.html)
@@ -47,8 +54,8 @@ class TaobaoHouseSpider : AbstractSpider {
         var scoll_init = 100;
         while (scoll_init < 12000) {
             driver.executeScript("window.scrollTo(0," + scoll_init + ")");
-            Thread.sleep(600)
-            scoll_init = scoll_init + 800
+            Thread.sleep(300)
+            scoll_init = scoll_init + 1000
         }
         val element = driver.findElementById("J_NoticeDetail").text//.findElement(By.xpath("/table/tbody"));
         //println("原生字符串")
@@ -93,7 +100,7 @@ class TaobaoHouseSpider : AbstractSpider {
         println("保证金为||" + baozhengjin)
         var jiafu = driver.findElementByXPath("//*[@id=\"J_HoverShow\"]/tr[1]/td[2]/span[2]/span").text
         println("加幅||" + jiafu)
-        var shijian = driver.findElementByXPath("//*[@id=\"J_HoverShow\"]/tr[2]/td[2]/span[2]").text
+        var shijian = driver.findElementByXPath("//*[@id=\"J_HoverShow\"]/tr[2]/td[2]/span[2]").text.substring(1)
         println("时间||" + shijian)
         //装修
         var zhuanxiu = "不详"
@@ -117,7 +124,7 @@ class TaobaoHouseSpider : AbstractSpider {
         }
         println("产权情况为||" + chanquan)
 //finalbean= loupan(null)楼盘  ,dizhi地址,goujia 构架,jianchen(null),mianji面积,zhuanxiu装修,cankao参考价,qipai起拍价,baozhen保证金,jiafu增幅,kaipai+jinpai 开拍时间与周期 chanquan产权情况
-      val finalBean =FinalBean(bean_address.address, huxing, mianji, zhuanxiu, bean_address.price_market, bean_address.price_origin, baozhengjin, jiafu, bean_address.time_start, shijian, chanquan)
+      val finalBean =FinalBean(bean_address.address, huxing, mianji, zhuanxiu, bean_address.price_market, bean_address.price_origin, baozhengjin, jiafu, bean_address.time_start, shijian, chanquan,bean_address.html)
     println("Finally we got an final bean"+finalBean.toString())
       //  driver.close();
     return finalBean;

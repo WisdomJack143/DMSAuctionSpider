@@ -1,7 +1,7 @@
-package dms.auctionspider.storage
+package dms.auctionspider.bak.storage
 
 import com.google.gson.Gson
-import dms.auctionspider.bean.FinalBean
+import dms.auctionspider.bak.bean.FinalBean
 import java.io.File
 import java.io.FileWriter
 import java.text.DateFormat

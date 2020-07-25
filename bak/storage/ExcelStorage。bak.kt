@@ -1,6 +1,6 @@
-//package dms.auctionspider.storage
+//package dms.auctionspider.bak.storage
 //
-//import dms.auctionspider.bean.FinalBean
+//import FinalBean
 //import jxl.Workbook
 //import jxl.write.Label
 //import jxl.write.WritableWorkbook

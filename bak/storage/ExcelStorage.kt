@@ -1,6 +1,6 @@
-package dms.auctionspider.storage
+package dms.auctionspider.bak.storage
 
-import dms.auctionspider.bean.FinalBean
+import dms.auctionspider.bak.bean.FinalBean
 import jxl.Workbook
 import jxl.write.Label
 import jxl.write.WritableWorkbook
@@ -20,7 +20,7 @@ class ExcelStorage {
            var book: WritableWorkbook = Workbook.createWorkbook(file )
             var sheet=book.createSheet("数据",0)
           //  var keys={"地址";"户型";"面积";"装修";"参考价";"起拍价";"保证金";"加幅";"开拍时间";"持续时间";"产权"}
-            var keys= arrayOf( "地址","户型","面积","装修","参考价","起拍价","保证金","加幅","开拍时间","持续时间","产权")
+            var keys= arrayOf( "地址","户型","面积","装修","参考价","起拍价","保证金","加幅","开拍时间","持续时间","产权","网址")
             for( i in  keys.indices){
                 var label=Label(i,0,keys[i] );
                 sheet.addCell(label);
@@ -38,6 +38,7 @@ class ExcelStorage {
                 sheet.addCell(Label(8,i,bean.kaipai));
                 sheet.addCell(Label(9,i,bean.shijian));
                 sheet.addCell(Label(10,i,bean.chanquan));
+                sheet.addCell(Label(11,i,bean.html));
                 i=i+1;
             }
             book.write()

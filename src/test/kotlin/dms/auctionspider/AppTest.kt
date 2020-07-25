@@ -3,6 +3,7 @@
  */
 package dms.auctionspider
 
+import dms.auctionspider.bak.App
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 
