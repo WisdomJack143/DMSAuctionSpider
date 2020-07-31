@@ -1,5 +1,6 @@
 package dms.auctionspider.collecting
 
+import dms.auctionspider.collecting.boilers.TypeBoiler
 import org.openqa.selenium.TimeoutException
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
@@ -16,10 +17,19 @@ class Hatcher {
     }
     fun hatch():Bean{
         driver.load(egg.url)
-//todo 没错，就是在这里，搜索各种各样的数据，明天搞吧
+        //todo 没错，就是在这里，搜索各种各样的数据，明天搞吧
+        val element=driver.findElementByXPath(egg.house.platform.desc_xpath);
+        val type=TypeBoiler<String>(element)
+        
+
+
     }
 
+
+
 }
+
+
 private fun ChromeDriver.load(url: String) {
     try{
         manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);

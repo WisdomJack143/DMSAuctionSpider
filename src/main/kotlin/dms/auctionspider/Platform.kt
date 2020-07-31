@@ -6,22 +6,25 @@ enum class Platform {
             ,"&page="
             ,"&location_code="
             ,".//div[@class=\"page-total\"]"
-    ,"//*[@class=\"link-wrap\"]"),
-    JD(1,"","","","","");
+    ,"//*[@class=\"link-wrap\"]",
+    "//*[@id=\"J_DetailTabMain\"]"),
+    JD(1,"","","","","","");
 
-   val id:Int;
+    val id:Int;
     val url:String;
     val page_url:String;
     val location_url:String;
     val page_xpath:String;
     val egg_xpath:String;
+    val desc_xpath:String;
     //平台ID,四川成都的法拍地址,翻页参数,区域参数
-    constructor(id:Int,url:String,page:String,location:String,page_xpath:String,egg_xpath:String){
+    constructor(id:Int,url:String,page:String,location:String,page_xpath:String,egg_xpath:String,desc_xpath:String){
 this.id=id;
         this.url=url;
         this.page_url=page
         this.location_url=location
         this.page_xpath=page_xpath
         this.egg_xpath=egg_xpath;
+        this.desc_xpath=desc_xpath;
     }
 }
